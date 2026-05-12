@@ -1,0 +1,54 @@
+# ── Python Dependencies ────────────────────────────────────────────────────────
+# Install on Raspberry Pi with:
+#   pip install -r requirements.txt
+
+customtkinter>=5.2.0
+opencv-python>=4.8.0
+Pillow>=10.0.0
+numpy>=1.24.0
+
+# RPi.GPIO comes pre-installed on Raspberry Pi OS.
+# On a regular PC (for testing without hardware):
+#   RPi.GPIO is NOT needed – arm_controller.py auto-detects and runs in sim mode.
+
+# ══════════════════════════════════════════════════════════════════════════════
+# QUICK SETUP GUIDE
+# ══════════════════════════════════════════════════════════════════════════════
+#
+# 1. Copy the three files to your Pi:
+#       main.py  |  screens.py  |  arm_controller.py
+#
+# 2. Install dependencies:
+#       pip install -r requirements.txt
+#
+# 3. Enable camera on Pi (if not already):
+#       sudo raspi-config → Interface Options → Camera → Enable
+#       reboot
+#
+# 4. Wire servos:
+#       Servo A signal  →  GPIO 17 (Pin 11)
+#       Servo B signal  →  GPIO 27 (Pin 13)
+#       Both VCC        →  5V rail (external supply recommended for arm load)
+#       Both GND        →  Pi GND
+#
+# 5. Run:
+#       python main.py
+#
+# 6. To enable robotic arm, in main.py uncomment:
+#       from arm_controller import ArmController
+#       self.arm = ArmController()
+#    And in handle_capture() add:
+#       self.arm.move_to_home()
+#    And in show_scan() add:
+#       self.arm.move_to_scan()
+#
+# 7. Kiosk / fullscreen mode on Pi:
+#       In main.py, uncomment:  self.overrideredirect(True)
+#       And change geometry to: self.geometry("800x480+0+0")
+#
+# FILE STRUCTURE
+# hs_kiosk/
+#   ├── main.py            ← App entry point + screen router
+#   ├── screens.py         ← HomeScreen, ScanScreen, ResultScreen
+#   ├── arm_controller.py  ← GPIO servo control (safe on non-Pi too)
+#   └── requirements.txt   ← This file
